@@ -19,7 +19,7 @@ export DEBIAN_FRONTEND=noninteractive;
 apt-get -y update
 apt-get -y upgrade
 
-apt-get -y install python3-dev virtualenv redis-server python3-pip postgresql libpq-dev postgresql-client postgresql-client-common git nginx
+apt-get -y install python3-dev virtualenv redis-server python3-pip postgresql libpq-dev postgresql-client postgresql-client-common git nginx bc
 
 #!/bin/bash
 
