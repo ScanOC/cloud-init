@@ -44,12 +44,7 @@ rm -f ~postgres/postgres_setup.sql
 
 curl https://raw.githubusercontent.com/ScanOC/cloud-init/master/tp-settings.tmpl -o tp-settings.tmpl 
 
-hostname=$(curl -s http://169.254.169.254/metadata/v1/hostname)
-public_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
-
 sed -e "s/__DB_PASS__/$db_pass/g" \
-    -e "s/__HOSTNAME__/$hostname/g" \
-    -e "s/__PUB_IP__/$public_IPV4/g" \
     -e "s/__SECRET_KEY__/$django_secret_key/g" < tp-settings.tmpl > /home/$user/tp-settings.tmpl
 chown $user /home/$user/tp-settings.tmpl
 
