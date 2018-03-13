@@ -19,7 +19,7 @@ export DEBIAN_FRONTEND=noninteractive;
 apt-get -y update
 apt-get -y upgrade
 
-apt-get -y install python3-dev virtualenv redis-server python3-pip postgresql libpq-dev postgresql-client postgresql-client-common git nginx bc
+apt-get -y install python3-dev virtualenv redis-server python3-pip postgresql libpq-dev postgresql-client postgresql-client-common git nginx bc supervisor
 
 #!/bin/bash
 
@@ -62,6 +62,11 @@ su - $user -c "cd /home/$user && ./tp-setup.sh"
 
 rm -f /etc/nginx/sites-enabled/default
 ln -s /home/$user/trunk-player/trunk_player/nginx.conf /etc/nginx/sites-enabled/001-trunkplayer.conf
+
+ln /home/$user/trunk-player/trunk_player/supervisor.conf /etc/supervisor/conf.d/trunk_player.conf
+
+supervisorctl reread
+supervisorctl update
 
 kill -HUP `cat /var/run/nginx.pid`
 

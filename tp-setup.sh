@@ -24,10 +24,6 @@ curl https://raw.githubusercontent.com/ScanOC/cloud-init/master/nginx.tmpl -o ng
 sed "s#__PATH__#$my_path#g" < nginx.tmpl > trunk_player/nginx.conf
 rm -f nginx.tmpl
 
-# Start Server
-nohup daphne trunk_player.asgi:channel_layer --port 7055 --bind 127.0.0.1 > daphne.log 2>&1 &
-
-nohup ./manage.py runworker > runworker1.log 2>&1 &
-nohup ./manage.py runworker > runworker2.log 2>&1 &
-
+curl https://raw.githubusercontent.com/ScanOC/cloud-init/master/supervisor.conf.tmpl -o supervisor.conf.tmpl
+sed "s#__PATH__#$my_path#g" < supervisor.conf.tmpl > trunk_player/supervisor.conf
 

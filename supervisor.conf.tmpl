@@ -1,0 +1,31 @@
+# supervisor.conf
+[group:trunkplayer]
+programs=trunkplayer_asgi_daphne, trunkplayer_asgi_workers, trunkplayer_add_transmission_workers
+priority=999
+
+
+[program:trunkplayer_asgi_daphne]
+user=radio
+redirect_stderr=true
+stdout_logfile=__PATH__/logs/daphne.log
+directory=__PATH__
+command=__PATH__/env/bin/daphne -u daphne trunk_player.asgi:channel_layer --port 7055 --bind 127.0.0.1
+
+[program:trunkplayer_asgi_workers]
+user=radio
+redirect_stderr=true
+stdout_logfile=__PATH__/logs/runworker_%(process_num)02d.log
+command=__PATH__/env/bin/python __PATH__/manage.py runworker
+process_name=asgi_worker%(process_num)s
+stopasgroup=true
+numprocs=4
+
+[program:trunkplayer_add_transmission_workers]
+user=radio
+redirect_stderr=true
+stdout_logfile=__PATH__/logs/add_transmission_worker_%(process_num)02d.log
+command=__PATH__/env/bin/python /home/radio/trunk-player/manage.py add_transmission_worker
+process_name=add_transmission_worker%(process_num)s
+stopasgroup=true
+numprocs=4
+
