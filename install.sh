@@ -79,7 +79,10 @@ fi
 # Amazon EC2 has a non usable root key, try ubuntu
 if [ -f /home/ubuntu/.ssh/authorized_keys ]
 then
-    mkdir /home/$user/.ssh
+    if [ ! -d /home/$user/.ssh ]
+    then
+        mkdir /home/$user/.ssh
+    fi
     chown $user:$user /home/$user/.ssh
     chmod 700 /home/$user/.ssh
     cp /home/ubuntu/.ssh/authorized_keys /home/$user/.ssh/authorized_keys
