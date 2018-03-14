@@ -76,6 +76,18 @@ then
     chmod 600 /home/$user/.ssh/authorized_keys
 fi
 
+# Amazon EC2 has a non usable root key, try ubuntu
+if [ -f /home/ubuntu/.ssh/authorized_keys ]
+then
+    mkdir /home/$user/.ssh
+    chown $user:$user /home/$user/.ssh
+    chmod 700 /home/$user/.ssh
+    cp /home/ubuntu/.ssh/authorized_keys /home/$user/.ssh/authorized_keys
+    chown $user:$user /home/$user/.ssh/authorized_keys
+    chmod 600 /home/$user/.ssh/authorized_keys
+fi
+
+
 echo "Complete" 
 echo "`date` Complete" >> /root/INSTALL_STARTED
 mv /root/INSTALL_STARTED /root/INSTALL_COMPLETE
